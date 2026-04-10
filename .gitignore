@@ -1,0 +1,47 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Models & Data
+models/
+*.gguf
+*.bin
+*.safetensors
+*.pkl
+
+# Vector Database
+vector_db/
+*.faiss
+*.index
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Environment variables
+.env
+.env.local

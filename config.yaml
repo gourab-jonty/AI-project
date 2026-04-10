@@ -1,0 +1,47 @@
+# Jonty - Personal AI Assistant Configuration
+
+# Paths to scan for file indexing
+paths:
+  - ~/Documents
+  - ~/Downloads
+  - ~/Desktop
+  - ~/.
+
+# Model configuration
+model:
+  name: "TinyLlama"
+  model_path: "models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
+  context_length: 2048
+  temperature: 0.7
+  max_tokens: 512
+
+# Embedding model (for RAG)
+embedding:
+  model_name: "sentence-transformers/all-MiniLM-L6-v2"
+  embedding_dim: 384
+  device: "cpu"
+
+# Vector database
+vector_db:
+  type: "FAISS"
+  index_path: "vector_db/faiss_index.bin"
+  metadata_path: "vector_db/metadata.json"
+  chunk_size: 512
+  overlap: 50
+
+# Logging
+logging:
+  level: "INFO"
+  log_file: "logs/jonty.log"
+
+# RAG settings
+rag:
+  top_k: 5
+  similarity_threshold: 0.5
+
+# Tools enabled
+tools:
+  calculator: true
+  alarm: true
+  file_operations: true
+  system_info: true

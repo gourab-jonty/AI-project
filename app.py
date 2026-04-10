@@ -15,7 +15,7 @@ project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
 from agents import UnifiedAgentManager
-from brain import Brain
+from agent.brain import Brain
 
 # ============================================================================
 # PAGE CONFIG

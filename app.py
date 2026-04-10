@@ -7,6 +7,7 @@ import streamlit as st
 import os
 import sys
 import time
+import yaml
 from datetime import datetime
 from pathlib import Path
 
@@ -46,7 +47,16 @@ with st.sidebar:
 
 # Initialize session
 if 'brain' not in st.session_state:
-    st.session_state.brain = Brain()
+    # Load config
+    config_path = project_root / "config.yaml"
+    if not config_path.exists():
+        config_path = project_root / "config-highend.yaml"
+    
+    with open(config_path, 'r') as f:
+        config = yaml.safe_load(f)
+    
+    st.session_state.brain = Brain(config)
+    st.session_state.brain.load_model()  # Load the LLM model
     st.session_state.manager = UnifiedAgentManager(st.session_state.brain)
 
 manager = st.session_state.manager

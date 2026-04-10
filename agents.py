@@ -113,7 +113,7 @@ class ChatAgent:
         if intent['type'] == 'greeting':
             response = "Hello! 👋 I'm Jonty. How can I help you today?"
         else:
-            response_obj = self.base_agent.process_query(user_message)
+            response_obj = self.base_agent.generate_response(user_message)
             response = response_obj.get('response', 'I couldn\'t understand that')
         
         self.conversation_history.append({
@@ -333,7 +333,7 @@ class UnifiedAgentManager:
         elif mode == 'integration':
             result = self.integration.process_integrated_query(query)
         else:
-            result = self.base_agent.process_query(query)
+            result = self.base_agent.generate_response(query)
         
         # Log to analytics
         exec_time = time.time() - start

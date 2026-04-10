@@ -5,11 +5,12 @@ A powerful **offline-first** personal AI assistant that understands your local f
 ## ✨ Features
 
 - 🔍 **RAG (Retrieval-Augmented Generation)**: Search and understand your local files (PDFs, documents, code)
-- 🧠 **Offline LLM**: Works completely offline using TinyLlama (CPU-friendly)
+- 🧠 **Offline LLM**: Works completely offline using latest models (LLaMA 3, Mistral, etc.)
+- 🚀 **GPU Acceleration**: NVIDIA/AMD GPU support for 5-10x faster responses
 - 🧰 **Tools System**: Calculator, file operations, alarms, app launching
 - 🤔 **Smart Agent**: Automatically decides between search, tools, or direct answers
 - 💾 **Memory**: Remembers conversation context
-- ⚡ **Lightweight & Portable**: Code is only ~50MB - quick setup on any machine (Windows/Mac/Linux)
+- ⚡ **Lightweight & Portable**: Code is only ~50MB - quick setup on any machine (Windows/Mac/Linux) with high-end or low-end specs
 
 ---
 
@@ -66,17 +67,23 @@ Search Results
 
 ## 🚀 Quick Setup Guide
 
-### **On Current Machine (Linux)**
+### **Choose Your Setup Guide:**
+
+- 🪟 **[Windows Setup](SETUP-WINDOWS.md)** - High-end systems with GPU
+- 🐧 **[Linux Setup](SETUP-LINUX.md)** - Ubuntu/Debian with GPU support
+- 📦 **[Installation](INSTALLATION.md)** - Cross-platform with any backend
+- 🚀 **[Deployment](DEPLOYMENT.md)** - Step-by-step manual setup
+
+### **Quickest Method (All Platforms):**
+
 ```bash
-cd /home/gourab-nandi/AI/jonty
-source venv/bin/activate
-pip install -r requirements.txt
-python main.py
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
+
+# Setup (choose based on OS):
+python setup.py              # Windows/Mac/Linux
+./setup.sh                   # Linux/Mac only
 ```
-
-### **On New Machine (Windows/Linux/Mac)**
-
-The code is **completely portable**! Just 3 commands:
 
 ```bash
 # 1. Clone repo

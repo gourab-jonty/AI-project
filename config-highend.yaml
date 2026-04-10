@@ -1,0 +1,184 @@
+# ============================================
+# JONTY - Personal AI Assistant Configuration
+# OPTIMIZED FOR HIGH-END SYSTEMS (Windows/Linux)
+# ============================================
+# GPU-Accelerated | Latest Models | Fast Processing
+
+# ============================================
+# FILE PATHS (Indexed Directories)
+# ============================================
+paths:
+  - ~/Documents
+  - ~/Downloads
+  - ~/Desktop
+
+# ============================================
+# LLM MODEL - SELECT ONE BACKEND
+# ============================================
+# For HIGH-END SYSTEMS (12GB+ RAM, prefer GPU)
+#
+# BEST OPTION: Ollama (Auto Model Management)
+#   1. Download: https://ollama.ai
+#   2. Run: ollama pull llama3
+#   3. Run: ollama serve (background)
+#   4. Restart Jonty
+#
+# ALT: llama-cpp (Manual Model Download)
+#   - More control
+#   - Download model file (~4-7GB)
+#   - Place in models/ folder
+
+model:
+  # CHOOSE ONE: "ollama" or "llama-cpp"
+  backend: "ollama"
+  
+  # === OLLAMA BACKEND (RECOMMENDED) ===
+  ollama:
+    # Models for HIGH-END:
+    # - llama3         (8B, best quality, 16GB+ RAM, ~30s responses)
+    # - mistral        (7B, fast+quality, 12GB+ RAM, ~15s responses)
+    # - llama3:7b      (7B version, 12GB+ RAM)
+    # - neural-chat    (7B, optimized, ~12s responses)
+    # - orca-mini      (7B, instruction-tuned)
+    # - dolphin-mixtral (smaller, fast)
+    # - tinyllama       (1.1B, light, if CPU only)
+    
+    model_name: "llama3"        # ← CHANGE THIS to switch models
+    host: "localhost"
+    port: 11434
+    keep_alive: "5m"            # Keep model loaded for 5 minutes
+  
+  # === LLAMA-CPP BACKEND (Manual) ===
+  llama_cpp:
+    # HIGH-END MODELS (download from HuggingFace):
+    # - llama-3-8b-instruct.Q5_K_M.gguf     (7-8GB)
+    # - mistral-7b-instruct.Q5_K.gguf       (5-6GB)
+    # - neural-chat-7b.Q5_K.gguf            (5-6GB)
+    
+    model_path: "models/llama-3-8b-instruct.Q5_K_M.gguf"
+    context_length: 8192        # 8K context for better understanding
+    use_gpu: true               # Enable GPU acceleration
+    gpu_layers: -1              # -1 = all layers on GPU
+    n_threads: 16               # CPU threads (increase for high-core CPUs)
+  
+  # === INFERENCE SETTINGS ===
+  temperature: 0.7              # Balance between deterministic and creative
+  top_k: 50                      # Sample from top 50 tokens
+  top_p: 0.9                     # Nucleus sampling threshold
+  max_tokens: 2048              # Longer responses (from 512)
+  repeat_penalty: 1.1            # Avoid repetition
+
+# ============================================
+# EMBEDDING MODEL (for File Search)
+# ============================================
+embedding:
+  # For HIGH-END: Use better embeddings
+  # - "all-mpnet-base-v2"     (Best quality, 768-dim)
+  # - "all-MiniLM-L12-v2"     (Balanced, 384-dim)
+  # - "all-MiniLM-L6-v2"      (Light, 384-dim) ← Current
+  
+  model_name: "sentence-transformers/all-mpnet-base-v2"
+  embedding_dim: 768
+  device: "cuda"                # Use GPU: cuda, mps (Mac), or cpu
+  batch_size: 128               # Increase for GPU (was 32)
+  cache_folder: "~/.cache/huggingface"
+
+# ============================================
+# VECTOR DATABASE (FAISS)
+# ============================================
+vector_db:
+  type: "FAISS"
+  index_path: "vector_db/faiss_index.bin"
+  metadata_path: "vector_db/metadata.json"
+  index_type: "Flat"            # Options: Flat, IVFFlat, HNSW
+  chunk_size: 1024              # Larger chunks for better context
+  overlap: 100                   # More overlap for better continuity
+
+# ============================================
+# RAG (Retrieval-Augmented Generation)
+# ============================================
+rag:
+  top_k: 8                       # More results for better accuracy
+  similarity_threshold: 0.4      # Lower threshold (were 0.5)
+  rerank: false                  # Enable reranking (requires more compute)
+  
+# ============================================
+# INDEXING (File Scanning)
+# ============================================
+indexing:
+  # File types to index
+  supported_formats:
+    - .pdf
+    - .txt
+    - .md
+    - .docx
+    - .xlsx
+    - .csv
+    - .py
+    - .js
+    - .java
+    - .cpp
+    - .c
+  
+  # Skip these directories
+  skip_dirs:
+    - node_modules
+    - __pycache__
+    - venv
+    - dist
+    - build
+    - .git
+  
+  # Max file size (MB) to index
+  max_file_size: 100
+  
+  # Parallel processing (HIGH-END ONLY)
+  num_workers: 8                # Parallel file processing threads
+
+# ============================================
+# PERFORMANCE OPTIMIZATION
+# ============================================
+performance:
+  # GPU Settings
+  use_gpu: true
+  device: "cuda"                # cuda, mps (Mac), or cpu
+  
+  # CPU Settings
+  cpu_threads: 16               # Increase for many-core systems
+  pin_memory: true              # Keep data in RAM
+  
+  # Caching
+  enable_cache: true
+  cache_size_mb: 2048          # Cache embeddings (~2GB)
+
+# ============================================
+# LOGGING
+# ============================================
+logging:
+  level: "INFO"                 # DEBUG, INFO, WARNING, ERROR
+  log_file: "logs/jonty.log"
+  max_log_size: "50MB"
+  backup_count: 3
+
+# ============================================
+# TOOLS CONFIGURATION
+# ============================================
+tools:
+  enable_file_operations: true
+  enable_alarms: true
+  enable_calculations: true
+  enable_app_launch: true
+  enable_system_info: true
+
+# ============================================
+# ADVANCED SETTINGS
+# ============================================
+advanced:
+  # For development/debugging
+  debug_mode: false
+  save_conversations: true
+  conversation_history_limit: 50
+  
+  # System
+  temp_folder: "~/.jonty/temp"
+  max_workers: 8

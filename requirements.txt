@@ -1,5 +1,5 @@
 # Jonty - Personal AI Assistant
-# Phase 1-4: Complete Dependencies
+# Phase 1-5: Complete Dependencies with All Agents
 
 # Core ML/AI
 faiss-cpu>=1.13.0
@@ -23,6 +23,12 @@ openpyxl>=3.1.0
 # Configuration & Utils
 pyyaml>=6.0
 python-dotenv>=1.0.0
+
+# WEB UI (Phase 5)
+streamlit>=1.28.0
+
+# Advanced Features (All Agents)
+requests>=2.31.0  # For API integrations
 
 # Optional: For OCR and advanced features
 # pytesseract>=0.3.10

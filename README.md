@@ -1,15 +1,15 @@
 # 🤖 Jonty - Personal AI Assistant
 
-A personal, **completely offline** AI assistant that understands your local files and performs tasks on command.
+A powerful **offline-first** personal AI assistant that understands your local files and performs actions.
 
-## 🎯 Vision
+## ✨ Features
 
-Your own Jarvis-style AI that:
-- 📂 Indexes and searches **all your local files** (PDF, txt, code, docs, etc.)
-- 🧠 Understands queries using offline LLM (TinyLlama → LLaMA 3)
-- 🛠️ Performs actions (calculator, alarms, file operations)
-- 🔒 **100% offline** - No data leaves your computer
-- ⚡ Runs on CPU-only systems
+- 🔍 **RAG (Retrieval-Augmented Generation)**: Search and understand your local files (PDFs, documents, code)
+- 🧠 **Offline LLM**: Works completely offline using TinyLlama (CPU-friendly)
+- 🧰 **Tools System**: Calculator, file operations, alarms, app launching
+- 🤔 **Smart Agent**: Automatically decides between search, tools, or direct answers
+- 💾 **Memory**: Remembers conversation context
+- ⚡ **Lightweight & Portable**: Code is only ~50MB - quick setup on any machine (Windows/Mac/Linux)
 
 ---
 
@@ -64,114 +64,151 @@ Search Results
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Setup Guide
 
-### 1. Setup
+### **On Current Machine (Linux)**
 ```bash
-cd ~/AI/jonty
+cd /home/gourab-nandi/AI/jonty
+source venv/bin/activate
+pip install -r requirements.txt
+python main.py
+```
 
-# Create & activate environment (if not done)
+### **On New Machine (Windows/Linux/Mac)**
+
+The code is **completely portable**! Just 3 commands:
+
+```bash
+# 1. Clone repo
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
+
+# 2. Setup (one-time)
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+python main.py index      # Index your files
+
+# 3. Run
+python main.py            # Interactive mode
+```
+
+**That's it!** Setup takes 5-10 minutes on most machines.
+
+---
+
+## 🛠️ Installation by OS
+
+### **Linux/Mac**
+```bash
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
 python3 -m venv venv
 source venv/bin/activate
-
-# Install dependencies
 pip install -r requirements.txt
+python3 main.py
 ```
 
-### 2. Configure Paths
-Edit `config.yaml`:
-```yaml
-paths:
-  - ~/Documents
-  - ~/Downloads
-  - ~/.
-```
-
-### 3. Index Your Files
-```bash
-python3 indexer.py
-```
-
-### 4. Test the System
-```bash
-python3 test_phase1.py
-```
-
-### 5. Use in Code
-```python
-from indexer import Indexer
-from agent.retriever import Retriever
-
-# Initialize
-indexer = Indexer()
-indexer.index_paths()
-
-retriever = Retriever(indexer.embedder, indexer.vector_db)
-
-# Search
-results = retriever.search("your question here")
-for result in results:
-    print(f"{result['source']}: {result['text']}")
+### **Windows (PowerShell)**
+```powershell
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+python main.py
 ```
 
 ---
 
-## ⚙️ Configuration
+## 💬 Usage
 
-### config.yaml
-
-```yaml
-# Scan these folders
-paths:
-  - ~/Documents
-  - ~/Downloads
-
-# Embedding model (CPU-optimized, 384-dim)
-embedding:
-  model_name: "sentence-transformers/all-MiniLM-L6-v2"
-
-# Vector database
-vector_db:
-  chunk_size: 512      # Characters per chunk
-  overlap: 50          # Overlap for context
-```
-
----
-
-## 📊 Supported File Types
-
-| Format | Method | Status |
-|--------|--------|--------|
-| PDF | PyMuPDF | ✅ Working |
-| TXT, MD, PY, JSON | Direct read | ✅ Working |
-| DOCX | python-docx | ✅ Working |
-| CSV | Pandas | ✅ Working |
-| XLSX/XLS | Pandas | ✅ Working |
-| Images (OCR) | Tesseract | 🔧 Optional |
-
----
-
-## 🧪 Testing
-
-### Run Phase 1 Tests
+### Interactive Mode
 ```bash
-python3 test_phase1.py
+python main.py
+
+You: What Python files do I have?
+Jonty: I found these in your directory...
+
+You: Calculate 2 + 2 * 3
+Jonty: 2 + 2 * 3 = 8
+
+You: quit
 ```
 
-### Test Individual Components
-```python
-from agent.loader import FileLoader
-from agent.chunker import TextChunker
-from agent.embedder import Embedder
+### Single Query
+```bash
+python main.py "Search for PDFs about machine learning"
+```
 
-loader = FileLoader()
-docs = loader.load_directory("~/Documents")
+### Index Files
+```bash
+python main.py index
+```
 
-chunker = TextChunker()
-chunks = chunker.chunk_documents(docs)
+### Run Tests
+```bash
+python test_integration.py
+```
 
-embedder = Embedder()
-embeddings, chunks = embedder.embed_chunks(chunks)
+---
+
+## 🛠️ Available Tools
+
+| Tool | Purpose | Example |
+|------|---------|---------|
+| `calculator` | Math expressions | `2 + 2 * 3` |
+| `open_file` | Open files | `open ~/file.pdf` |
+| `open_app` | Launch apps | `open firefox` |
+| `search_files` | Find files | `find *.pdf` |
+| `read_file` | Read file content | `show ~/file.txt` |
+| `get_time` | Current time | `what time is it` |
+| `get_date` | Current date | `what's today` |
+| `set_alarm` | Set alarm | `alarm at 3 PM` |
+| `list_directory` | Browse folders | `list ~/Documents` |
+
+---
+
+## 🚀 Multi-Machine Setup (Fast!)
+
+### **Setup on Windows with Higher Config**
+
+Since code is only 50MB, setup is **fast everywhere**:
+
+```powershell
+# 1. Clone
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
+
+# 2. Setup
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+
+# 3. Download Model (one-time)
+cd models
+# Download TinyLlama or use Ollama
+cd ..
+
+# 4. Run
+python main.py
+```
+
+**Timeline:**
+- Clone: 1 min
+- Venv + dependencies: 3-5 mins (faster with good internet)
+- Model download: 2-3 mins (638MB)
+- Total: **~10 minutes**
+
+### **Setup on Mac**
+
+```bash
+git clone https://github.com/gourab-jonty/AI-project.git
+cd AI-project
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 main.py
 ```
 
 ---
@@ -184,54 +221,76 @@ embeddings, chunks = embedder.embed_chunks(chunks)
 - RAG retrieval
 - Status: **COMPLETE**
 
-### 🔲 Phase 2: AI Brain
+### ✅ Phase 2: AI Brain
 - LLM integration
 - Model loading (TinyLlama)
 - Prompt system
+- Status: **COMPLETE**
 
-### 🔲 Phase 3: Tools
+### ✅ Phase 3: Tools
 - Calculator
 - Alarms
 - File operations
+- Status: **COMPLETE**
 
-### 🔲 Phase 4: Agent
+### ✅ Phase 4: Agent
 - Intent detection
 - Smart routing
+- Status: **COMPLETE**
 
-### 🔲 Phase 5: UI
+### 🏗️ Phase 5: UI
 - Streamlit interface
+- Status: **IN PROGRESS**
 
-### 🔲 Phase 6: Upgrades
+### 🏗️ Phase 6: Upgrades
 - LLaMA 3 (GPU)
 - Whisper (audio)
 - Vision models
+- Status: **PLANNED**
 
 ---
 
-## 💾 Project Structure
+## � Project Structure
 
 ```
 jonty/
-├── agent/
-│   ├── __init__.py
-│   ├── loader.py          # File loading
-│   ├── chunker.py         # Text chunking
-│   ├── embedder.py        # Embeddings
-│   ├── vector_db.py       # FAISS storage
-│   ├── retriever.py       # Search
-│   └── tools.py           # (Phase 3)
-│
-├── indexer.py             # Main orchestrator
-├── config.yaml            # Configuration
-├── requirements.txt       # Dependencies
-├── test_phase1.py         # Tests
-│
-├── models/                # LLM models (Phase 2)
-├── vector_db/             # FAISS index & metadata
-├── logs/                  # Application logs
-├── venv/                  # Python virtual environment
-└── README.md              # This file
+├── agent/                    # Core agent components
+│   ├── brain.py             # LLM interface  
+│   ├── tools.py             # Action system
+│   ├── router.py            # Decision engine
+│   ├── loader.py            # File loading
+│   ├── chunker.py           # Text chunking
+│   ├── embedder.py          # Text embeddings
+│   ├── retriever.py         # File search
+│   └── vector_db.py         # Vector storage
+├── main.py                  # Main entry point
+├── indexer.py              # File indexing
+├── config.yaml             # Configuration
+├── requirements.txt        # Dependencies (clean, portable)
+├── test_integration.py     # Integration tests
+└── SETUP_GUIDE.md          # Detailed setup guide
+
+[GIT IGNORED - Not Committed]:
+├── venv/                   # Python environment (~23MB)
+├── models/                 # LLM model (~638MB, only downloaded once)
+├── vector_db/              # Indexed files (generated, regenerable)
+└── logs/                   # Logs (generated on run)
 ```
+
+## 💾 What's Ignored (Not in Git)
+
+To keep the repo lightweight (~50MB), these are excluded:
+
+| Folder | Size | Why Ignored | Regenerates? |
+|--------|------|-------------|--------------|
+| `venv/` | ~23MB | Per-machine environment | ✅ Yes (venv setup) |
+| `models/` | ~638MB | LLM model (download once) | ✅ Yes (wget) |
+| `vector_db/` | Variable | Generated from your files | ✅ Yes (run index) |
+| `logs/` | Small | Auto-generated logs | ✅ Yes (on run) |
+
+**Result:** 
+- Git repo: **~50MB** (includes all code)
+- Full setup: **~750MB** (with all components)
 
 ---
 

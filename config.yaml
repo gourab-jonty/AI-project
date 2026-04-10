@@ -1,43 +1,113 @@
-# Jonty - Personal AI Assistant Configuration
+# ============================================
+# JONTY - Personal AI Assistant Configuration
+# ============================================
+# Works on: Windows, Linux, macOS
+# Last Updated: 2026-04-10
 
-# Paths to scan for file indexing
+# ============================================
+# FILE PATHS (Indexed Directories)
+# ============================================
+# Add paths to scan. Use ~ for home directory
+# Supports wildcards
 paths:
   - ~/Documents
   - ~/Downloads
   - ~/Desktop
-  - ~/.
 
-# Model configuration
+# ============================================
+# LLM MODEL SELECTION
+# ============================================
+# Choose backend: "ollama" or "llama-cpp"
+# 
+# OLLAMA (Recommended - Easiest)
+# - Download: https://ollama.ai
+# - Then: ollama pull tinyllama
+# - Then: ollama serve (keep running)
+#
+# LLAMA-CPP (More control)
+# - Installed via pip
+# - Requires model file in models/ folder
+#
 model:
-  name: "TinyLlama"
-  model_path: "models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
-  context_length: 2048
-  temperature: 0.7
-  max_tokens: 512
+  backend: "llama-cpp"  # Options: "ollama" or "llama-cpp"
+  
+  # For Ollama backend
+  ollama:
+    model_name: "tinyllama"
+    host: "localhost"
+    port: 11434
+  
+  # For llama-cpp backend
+  llama_cpp:
+    # Model size options:
+    # - "tiny"   (1.1B) - Use for low RAM/CPU
+    # - "small"  (2.7B) - Balanced
+    # - "medium" (7B)   - Better quality (requires 16GB+ RAM)
+    size: "tiny"
+    model_path: "models/tinyllama-1.1b-chat-v1.0.Q4_K_M.gguf"
+    context_length: 2048
+  
+  # Common settings
+  temperature: 0.7      # 0.0=deterministic, 1.0=creative
+  max_tokens: 512       # Response length
+  top_k: 40            # Sampling parameter
+  top_p: 0.95          # Nucleus sampling
 
-# Embedding model (for RAG)
+# ============================================
+# EMBEDDING MODEL (for RAG/Search)
+# ============================================
 embedding:
   model_name: "sentence-transformers/all-MiniLM-L6-v2"
   embedding_dim: 384
-  device: "cpu"
+  device: "cpu"         # Options: "cpu", "cuda", "mps"
+  batch_size: 32
 
-# Vector database
+# ============================================
+# VECTOR DATABASE
+# ============================================
+# FAISS - Fast similarity search
 vector_db:
   type: "FAISS"
   index_path: "vector_db/faiss_index.bin"
   metadata_path: "vector_db/metadata.json"
-  chunk_size: 512
-  overlap: 50
+  chunk_size: 512       # Characters per chunk
+  overlap: 50          # Character overlap between chunks
 
-# Logging
-logging:
-  level: "INFO"
-  log_file: "logs/jonty.log"
-
-# RAG settings
+# ============================================
+# RAG (Retrieval-Augmented Generation)
+# ============================================
 rag:
-  top_k: 5
-  similarity_threshold: 0.5
+  top_k: 5                        # Return top 5 results
+  similarity_threshold: 0.5       # Min similarity score
+
+# ============================================
+# LOGGING
+# ============================================
+logging:
+  level: "INFO"         # Options: DEBUG, INFO, WARNING, ERROR
+  log_file: "logs/jonty.log"
+  max_log_size: "10MB"
+
+# ============================================
+# TOOLS SETTINGS
+# ============================================
+tools:
+  enable_file_operations: true
+  enable_alarms: true
+  enable_calculations: true
+  enable_app_launch: true
+
+# ============================================
+# GPU ACCELERATION (Optional - Comment out if not available)
+# ============================================
+# For faster inference if you have:
+# - NVIDIA GPU: Install: pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+# - AMD GPU: Install: pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.7
+# - Apple Silicon: Built-in support with default PyTorch
+#
+# gpu:
+#   enabled: false
+#   device: "cuda"      # Options: "cuda" (NVIDIA), "rocm" (AMD), "mps" (Apple)
 
 # Tools enabled
 tools:

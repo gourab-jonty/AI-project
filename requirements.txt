@@ -1,10 +1,18 @@
 # Jonty - Personal AI Assistant
-# Phase 1: Data Engine Dependencies
+# Phase 1-4: Complete Dependencies
 
 # Core ML/AI
 faiss-cpu>=1.13.0
 sentence-transformers>=2.6.0
 numpy>=1.26.0
+torch>=2.0.0
+
+# LLM Support (choose based on your setup)
+# For Ollama backend (recommended for beginners):
+ollama>=0.1.0
+
+# Alternative: llama-cpp-python backend (more control):
+# llama-cpp-python>=0.2.0
 
 # File Processing
 PyMuPDF>=1.23.0
@@ -12,11 +20,14 @@ python-docx>=0.8.10
 pandas>=2.0.0
 openpyxl>=3.1.0
 
-# Configuration
+# Configuration & Utils
 pyyaml>=6.0
+python-dotenv>=1.0.0
 
-# Optional: For audio/speech (Phase 5+)
-# openai-whisper==20230314
+# Optional: For OCR and advanced features
+# pytesseract>=0.3.10
+# Pillow>=10.0.0
+# openai-whisper>=20230314
 
 # Optional: For LLM (Phase 2+)
 # ollama==0.0.1
